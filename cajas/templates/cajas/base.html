@@ -4,38 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>{% block title %}Sistema de Cajas{% endblock %}</title>
 
-    <!-- Favicon navegador -->
     <link rel="icon" type="image/png" sizes="32x32"
           href="{% static 'cajas/img/favicon-32x32.png' %}?v=1">
-
-    <!-- Icono para iPhone / iPad -->
     <link rel="apple-touch-icon" sizes="180x180"
           href="{% static 'cajas/img/apple-touch-icon.png' %}?v=1">
-
-    <!-- Manifest para Android / instalación -->
     <link rel="manifest"
           href="{% static 'cajas/img/site.webmanifest' %}?v=1">
 
-    <link rel="stylesheet" href="{% static 'cajas/css/estilos.css' %}">
+    <link rel="stylesheet" href="{% static 'cajas/css/estilos.css' %}?v=2">
 </head>
 <body>
     <header class="topbar">
-        <div class="container">
-            <div>
-                <h1 class="logo">Control de Cajas</h1>
+        <div class="container topbar-inner">
+            <div class="brand-block">
+                <div class="brand-title-row">
+                    <h1 class="logo">Control de Cajas</h1>
+                </div>
                 <p class="logo-subtitle">Sistema para registro y control de códigos</p>
+
+                {% if user.is_authenticated %}
+                    <div class="user-company-info">
+                        <span class="info-chip">
+                            <span class="chip-label">Usuario</span>
+                            <strong>{{ user.username }}</strong>
+                        </span>
+
+                        {% if empresa_actual %}
+                            <span class="info-chip">
+                                <span class="chip-label">Empresa</span>
+                                <strong>{{ empresa_actual.nombre }}</strong>
+                            </span>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
 
             <nav class="menu">
-                <a href="{% url 'inicio' %}">Inicio</a>
-                <a href="{% url 'listar_cajas' %}">Cajas</a>
-                <a href="{% url 'crear_caja' %}">Nueva Caja</a>
-                <a href="{% url 'listar_tipos_caja' %}">Tipos</a>
-                <a href="{% url 'crear_tipo_caja' %}">Nuevo Tipo</a>
-                <a href="{% url 'exportar_excel' %}">Exportar Excel</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'inicio' %}">Inicio</a>
+                    <a href="{% url 'listar_cajas' %}">Cajas</a>
+                    <a href="{% url 'crear_caja' %}">Nueva Caja</a>
+                    <a href="{% url 'listar_tipos_caja' %}">Tipos</a>
+                    <a href="{% url 'crear_tipo_caja' %}">Nuevo Tipo</a>
+                    <a href="{% url 'exportar_excel' %}">Exportar Excel</a>
+                    <a href="{% url 'logout' %}" class="menu-danger">Salir</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Iniciar sesión</a>
+                {% endif %}
             </nav>
         </div>
     </header>
