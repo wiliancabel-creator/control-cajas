@@ -1,0 +1,39 @@
+{% extends 'cajas/base.html' %}
+{% block title %}Tipos de Caja{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="header-row">
+        <div>
+            <h2>Tipos de Caja</h2>
+            <p>Listado de tipos configurados.</p>
+        </div>
+        <a href="{% url 'crear_tipo_caja' %}" class="btn">Nuevo Tipo</a>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Prefijo</th>
+                    <th>Activo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tipo in tipos %}
+                <tr>
+                    <td>{{ tipo.nombre }}</td>
+                    <td>{{ tipo.prefijo }}</td>
+                    <td>{% if tipo.activo %}Sí{% else %}No{% endif %}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No hay tipos registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

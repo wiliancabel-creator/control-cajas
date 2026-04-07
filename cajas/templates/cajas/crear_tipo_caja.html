@@ -1,0 +1,30 @@
+{% extends 'cajas/base.html' %}
+{% block title %}Crear Tipo de Caja{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Crear Tipo de Caja</h2>
+    <p>Configura el nombre y el prefijo.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Nombre</label>
+            {{ form.nombre }}
+        </div>
+
+        <div class="form-group">
+            <label>Prefijo</label>
+            {{ form.prefijo }}
+        </div>
+
+        <div class="form-check">
+            {{ form.activo }}
+            <label>Activo</label>
+        </div>
+
+        <button type="submit" class="btn">Guardar</button>
+    </form>
+</div>
+{% endblock %}

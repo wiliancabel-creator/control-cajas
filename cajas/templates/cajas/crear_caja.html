@@ -1,0 +1,35 @@
+{% extends 'cajas/base.html' %}
+{% block title %}Crear Caja{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Nueva Caja</h2>
+    <p>Selecciona el tipo y el sistema generará el código automáticamente.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Tipo de caja</label>
+            {{ form.tipo_caja }}
+        </div>
+
+        <div class="form-group">
+            <label>Técnico</label>
+            {{ form.tecnico }}
+        </div>
+
+        <div class="form-group">
+            <label>Ubicación</label>
+            {{ form.ubicacion }}
+        </div>
+
+        <div class="form-group">
+            <label>Descripción</label>
+            {{ form.descripcion }}
+        </div>
+
+        <button type="submit" class="btn">Guardar</button>
+    </form>
+</div>
+{% endblock %}

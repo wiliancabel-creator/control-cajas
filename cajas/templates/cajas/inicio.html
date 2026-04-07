@@ -1,0 +1,90 @@
+{% extends 'cajas/base.html' %}
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="hero-card">
+    <div>
+        <h2 class="hero-title">Panel principal</h2>
+        <p class="hero-text">
+            Desde aquí puedes registrar cajas, configurar tipos de caja y exportar la información a Excel.
+        </p>
+    </div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-box">
+        <div class="stat-label">Total de cajas</div>
+        <div class="stat-number">{{ total_cajas }}</div>
+    </div>
+
+    <div class="stat-box">
+        <div class="stat-label">Tipos configurados</div>
+        <div class="stat-number">{{ total_tipos }}</div>
+    </div>
+</div>
+
+<div class="grid-menu">
+    <a href="{% url 'crear_caja' %}" class="menu-card">
+        <h3>Nueva Caja</h3>
+        <p>Registrar una nueva caja y generar el código automáticamente.</p>
+    </a>
+
+    <a href="{% url 'listar_cajas' %}" class="menu-card">
+        <h3>Listado de Cajas</h3>
+        <p>Ver todos los registros creados en el sistema.</p>
+    </a>
+
+    <a href="{% url 'crear_tipo_caja' %}" class="menu-card">
+        <h3>Nuevo Tipo de Caja</h3>
+        <p>Crear tipos con su prefijo para generar códigos únicos.</p>
+    </a>
+
+    <a href="{% url 'listar_tipos_caja' %}" class="menu-card">
+        <h3>Tipos de Caja</h3>
+        <p>Consultar los tipos configurados y sus prefijos.</p>
+    </a>
+
+    <a href="{% url 'exportar_excel' %}" class="menu-card">
+        <h3>Exportar Excel</h3>
+        <p>Descargar todos los registros en archivo Excel.</p>
+    </a>
+</div>
+
+<div class="card">
+    <div class="header-row">
+        <div>
+            <h2>Últimos registros</h2>
+            <p>Últimas cajas creadas en el sistema.</p>
+        </div>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Tipo</th>
+                    <th>Técnico</th>
+                    <th>Ubicación</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for caja in ultimas_cajas %}
+                <tr>
+                    <td><strong>{{ caja.codigo }}</strong></td>
+                    <td>{{ caja.tipo_caja.nombre }}</td>
+                    <td>{{ caja.tecnico|default:"-" }}</td>
+                    <td>{{ caja.ubicacion|default:"-" }}</td>
+                    <td>{{ caja.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">Todavía no hay registros.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
