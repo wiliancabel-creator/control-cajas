@@ -10,10 +10,10 @@ class Command(BaseCommand):
         User = get_user_model()
 
         username = os.environ.get("DJANGO_SUPERUSER_USERNAME")
-        email = os.environ.get("DJANGO_SUPERUSER_EMAIL")
+        email = os.environ.get("DJANGO_SUPERUSER_EMAIL", "")
         password = os.environ.get("DJANGO_SUPERUSER_PASSWORD")
 
-        if not username or not email or not password:
+        if not username or not password:
             self.stdout.write(self.style.WARNING(
                 "Faltan variables de entorno para crear el superusuario."
             ))
